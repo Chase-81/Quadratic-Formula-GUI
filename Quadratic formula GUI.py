@@ -2,7 +2,7 @@
 from math import *
 from tkinter import *
 from tkinter import ttk
-
+#Test
 #calculates discriminant and clears inputs if ticked box is ticked
 def discriminant():
    global a_value, b_value, c_value
