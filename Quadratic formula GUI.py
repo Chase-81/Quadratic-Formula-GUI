@@ -2,7 +2,7 @@
 from math import *
 from tkinter import *
 from tkinter import ttk
-#Test
+
 #calculates discriminant and clears inputs if ticked box is ticked
 def discriminant():
    global a_value, b_value, c_value
@@ -120,7 +120,11 @@ x_value_negative.grid(row=2, column=1)
 error_message_label = ttk.Label(output_frame, textvariable=error_message)
 error_message_label.grid(row=3, column=0)
 
+#loops through each item in each frame and applies spacing
 for widget in input_frame.winfo_children():
    widget.grid(padx=10, pady=10)
+
+for widget in output_frame.winfo_children():
+    widget.grid(padx=10, pady=10)
 
 mainloop()
