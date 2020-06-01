@@ -1,45 +1,62 @@
-#imports all the necessary library's
+# imports all the necessary library's
 from math import *
 from tkinter import *
 from tkinter import ttk
 
-#calculates discriminant and clears inputs if ticked box is ticked
+
+# calculates discriminant and clears inputs if ticked box is ticked
 def discriminant(a_value, b_value, c_value):
-   a = a_value.get()
-   b = b_value.get()
-   c = c_value.get()
-   value = (b ** 2) - (4 * a * c)
-   discriminant_return.set(value)
+    while True:
+        try:
 
-   if clear_var.get() == 1:
-       a_value.set("")
-       b_value.set("")
-       c_value.set("")
-       discriminant_return.set("")
-       x_negative.set("")
-       x_positive.set("")
+            a = a_value.get()
+            b = b_value.get()
+            c = c_value.get()
+            value = (b ** 2) - (4 * a * c)
+            discriminant_return.set(value)
 
-#calculates roots of the equation and checks the validity
+            if clear_var.get() == 1:
+                a_value.set("")
+                b_value.set("")
+                c_value.set("")
+                discriminant_return.set("")
+                x_negative.set("")
+                x_positive.set("")
+                break
+        except:
+            print("Hi")
+            break
+
+
+# calculates roots of the equation and checks the validity
 def roots(a_value, b_value, c_value):
-   a = a_value.get()
-   b = b_value.get()
-   c = c_value.get()
-   value = (b ** 2) - (4 * a * c)
+    while True:
+        try:
+            a = a_value.get()
+            b = b_value.get()
+            c = c_value.get()
+            value = (b ** 2) - (4 * a * c)
 
-   if value == 0:
-       result = ((-b) + sqrt(value)) / (2 * a)
-       x_positive.set(result)
-       error_message.set("")
-   elif value > 0:
-       result_positive = ((-b) + sqrt(value)) / (2 * a)
-       result_negative = ((-b) - sqrt(value)) / (2 * a)
-       x_positive.set(result_positive)
-       x_negative.set(result_negative)
-       error_message.set("")
-   else:
-       error_message.set("Error: The discriminant is less than zero, there are no real roots for this equation.")
+            if value == 0:
+                result = ((-b) + sqrt(value)) / (2 * a)
+                x_positive.set(result)
+                error_message.set("")
+            elif value > 0:
+                result_positive = ((-b) + sqrt(value)) / (2 * a)
+                result_negative = ((-b) - sqrt(value)) / (2 * a)
+                x_positive.set(result_positive)
+                x_negative.set(result_negative)
+                error_message.set("")
+            else:
+                error_message.set("Error: The discriminant is less than zero, there are no real roots for this equation.")
 
-#Creates window and input and output frames
+
+        except:
+            print("No")
+            break
+
+
+# Creates window and input and output frames
 root = Tk()
 root.title("Quadratic Formula Solver")
 
@@ -49,7 +66,7 @@ input_frame.grid(row=2, column=0, sticky="NSEW")
 output_frame = ttk.LabelFrame(root, text="Output")
 output_frame.grid(row=3, column=0, sticky="NSEW")
 
-#variables of program
+# variables of program
 a_value = DoubleVar()
 a_value.set("")
 b_value = DoubleVar()
@@ -66,9 +83,9 @@ x_negative = DoubleVar()
 x_negative.set("")
 error_message = StringVar()
 
-
-#GUI layout code
-statement = ttk.Label(root, text="This calculator can solve quadratic equations in the form ax^2 + bx + c\nEnter the values for a, b, and c")
+# GUI layout code
+statement = ttk.Label(root,
+                      text="This calculator can solve quadratic equations in the form ax^2 + bx + c\nEnter the values for a, b, and c")
 statement.grid(row=0, column=0, sticky="NSEW")
 
 a_label = ttk.Label(input_frame, text="Enter value for a:")
@@ -89,8 +106,9 @@ c_label.grid(row=2, column=0)
 c_entry = ttk.Entry(input_frame, textvariable=c_value)
 c_entry.grid(row=2, column=1)
 
-entry_button = ttk.Button(input_frame, text="Submit", command=lambda:[discriminant(a_value, b_value, c_value), roots(a_value, b_value, c_value)])
-entry_button.grid(row= 3, column=0)
+entry_button = ttk.Button(input_frame, text="Submit",
+                          command=lambda: [discriminant(a_value, b_value, c_value), roots(a_value, b_value, c_value)])
+entry_button.grid(row=3, column=0)
 
 clear = ttk.Checkbutton(input_frame, text="Clear when submitted", variable=clear_var)
 clear.grid(row=3, column=1)
@@ -116,11 +134,13 @@ x_value_negative.grid(row=2, column=1)
 error_message_label = ttk.Label(output_frame, textvariable=error_message)
 error_message_label.grid(row=3, column=0)
 
-#loops through each item in each frame and applies spacing
+# loops through each item in each frame and applies spacing
 for widget in input_frame.winfo_children():
-   widget.grid(padx=10, pady=10)
+    widget.grid(padx=10, pady=10)
 
 for widget in output_frame.winfo_children():
     widget.grid(padx=10, pady=10)
+
+print(error_message.get())
 
 mainloop()
