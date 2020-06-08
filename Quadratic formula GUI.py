@@ -88,6 +88,7 @@ def clear_all():
     discriminant_return.set("")
     x_positive.set("")
     x_negative.set("")
+    round_num.set("")
 
 
 #Creates window and input and output frames
