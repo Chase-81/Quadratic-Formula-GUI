@@ -49,7 +49,7 @@ def roots(a_value, b_value, c_value, round_num):
 
        if value == 0:
            if d < 0:
-               messagebox.showerror("ERROR", "You can not round to {} decimal places".format(d))
+               pass
            elif d < 0:
                result = ((-b) + sqrt(value)) / (2 * a)
                x_positive.set(round(result, 0))
@@ -62,7 +62,7 @@ def roots(a_value, b_value, c_value, round_num):
 
        elif value > 0:
            if d < 0:
-               messagebox.showerror("ERROR", "You can not round to {} decimal places".format(d))
+               pass
            elif d == 0:
                result_positive = ((-b) + sqrt(value)) / (2 * a)
                result_negative = ((-b) - sqrt(value)) / (2 * a)
@@ -186,6 +186,9 @@ error_message_label = ttk.Label(output_frame, textvariable=error_message)
 error_message_label.grid(row=3, column=0)
 
 #loops through each item in each frame and applies spacing
+for widget in root.winfo_children():
+    widget.grid(padx=5, pady=5)
+
 for widget in input_frame.winfo_children():
    widget.grid(padx=10, pady=10)
 
