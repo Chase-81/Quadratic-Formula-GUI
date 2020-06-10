@@ -13,25 +13,29 @@ def discriminant(a_value, b_value, c_value, round_num):
         c = c_value.get()
         d = round_num.get()
 
-        if d < 0:
-            messagebox.showerror("ERROR", "You can not round to {} decimal places".format(d))
-        elif d == 0:
-            value = (b ** 2) - (4 * a * c)
-            discriminant_return.set(round(value, 0))
-        elif d > 0:
-            value = (b ** 2) - (4 * a * c)
-            discriminant_return.set(round(value, d))
-        else:
-            messagebox.showerror("ERROR", "Tha wasn't an option")
+        if a and b and c != 0:
 
-        if clear_var.get() == 1:
-            a_value.set("")
-            b_value.set("")
-            c_value.set("")
-            discriminant_return.set("")
-            x_negative.set("")
-            x_positive.set("")
-            round_num.set("")
+            if d < 0:
+                messagebox.showerror("ERROR", "You can not round to {} decimal places".format(d))
+            elif d == 0:
+                value = (b ** 2) - (4 * a * c)
+                discriminant_return.set(round(value, 0))
+            elif d > 0:
+                value = (b ** 2) - (4 * a * c)
+                discriminant_return.set(round(value, d))
+            else:
+                messagebox.showerror("ERROR", "Tha wasn't an option")
+
+            if clear_var.get() == 1:
+                a_value.set("")
+                b_value.set("")
+                c_value.set("")
+                discriminant_return.set("")
+                x_negative.set("")
+                x_positive.set("")
+                round_num.set("")
+        else:
+            error_message.set("I can not calculate an equation if all inputs are 0")
    except:
        messagebox.showerror("ERROR", "You have to enter 1 real number in each entry field")
 
@@ -47,17 +51,21 @@ def roots(a_value, b_value, c_value, round_num):
 
        value = (b ** 2) - (4 * a * c)
 
-       if value == 0:
+       if value < 0:
+           error_message.set("Your equation doesn't have any real roots")
+           pass
+
+       elif value == 0:
            if d < 0:
                pass
            elif d < 0:
                result = ((-b) + sqrt(value)) / (2 * a)
                x_positive.set(round(result, 0))
-               error_message.set("")
+
            elif d > 0:
                result = ((-b) + sqrt(value)) / (2 * a)
                x_positive.set(round(result, d))
-               error_message.set("")
+
 
 
        elif value > 0:
