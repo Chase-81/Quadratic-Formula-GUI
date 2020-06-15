@@ -11,7 +11,11 @@ def discriminant(a_value, b_value, c_value, round_num):
         a = a_value.get()
         b = b_value.get()
         c = c_value.get()
-        d = round_num.get()
+
+        try:
+            d = round_num.get()
+        except:
+            d = 100
 
         if a and b and c != 0:
 
@@ -23,6 +27,11 @@ def discriminant(a_value, b_value, c_value, round_num):
             elif d > 0:
                 value = (b ** 2) - (4 * a * c)
                 discriminant_return.set(round(value, d))
+
+            elif d == 100:
+                value = (b ** 2) - (4 * a * c)
+                discriminant_return.set(value)
+
             else:
                 messagebox.showerror("ERROR", "Tha wasn't an option")
 
@@ -38,6 +47,7 @@ def discriminant(a_value, b_value, c_value, round_num):
             error_message.set("I can not calculate an equation if all inputs are 0")
    except:
        messagebox.showerror("ERROR", "You have to enter 1 real number in each entry field")
+       print("HI")
 
 
 #calculates roots of the equation and checks the validity
@@ -46,7 +56,11 @@ def roots(a_value, b_value, c_value, round_num):
        a = a_value.get()
        b = b_value.get()
        c = c_value.get()
-       d = round_num.get()
+
+       try:
+           d = round_num.get()
+       except:
+           d = 100
 
 
        value = (b ** 2) - (4 * a * c)
@@ -66,6 +80,10 @@ def roots(a_value, b_value, c_value, round_num):
                result = ((-b) + sqrt(value)) / (2 * a)
                x_positive.set(round(result, d))
 
+           elif d == 100:
+               result = ((-b) + sqrt(value)) / (2 * a)
+               x_positive.set(result)
+
 
 
        elif value > 0:
@@ -83,6 +101,14 @@ def roots(a_value, b_value, c_value, round_num):
                x_positive.set(round(result_positive, d))
                x_negative.set(round(result_negative, d))
                error_message.set("")
+
+           elif d == 100:
+               result_positive = ((-b) + sqrt(value)) / (2 * a)
+               result_negative = ((-b) - sqrt(value)) / (2 * a)
+               x_positive.set(result_positive)
+               x_negative.set(result_negative)
+               error_message.set("")
+
            else:
                pass
    except:
