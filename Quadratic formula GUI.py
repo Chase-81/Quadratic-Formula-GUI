@@ -21,6 +21,9 @@ def discriminant(a_value, b_value, c_value, round_num):
 
             if d < 0:
                 messagebox.showerror("ERROR", "You can not round to {} decimal places".format(d))
+                discriminant_return.set("")
+                x_positive.set("")
+                x_negative.set("")
             elif d == 0:
                 value = (b ** 2) - (4 * a * c)
                 discriminant_return.set(round(value, 0))
@@ -43,11 +46,12 @@ def discriminant(a_value, b_value, c_value, round_num):
                 x_negative.set("")
                 x_positive.set("")
                 round_num.set("")
+                error_message.set("")
         else:
             error_message.set("I can not calculate an equation if all inputs are 0")
    except:
-       messagebox.showerror("ERROR", "You have to enter 1 real number in each entry field")
-       print("HI")
+       messagebox.showerror("ERROR", "You have to enter one real number in entry field a, b and c.\nIf nothing is entered in the rounding field the results are not rounded.")
+
 
 
 #calculates roots of the equation and checks the validity
@@ -123,6 +127,7 @@ def clear_all():
     x_positive.set("")
     x_negative.set("")
     round_num.set("")
+    error_message.set("")
 
 
 #Creates window and input and output frames
