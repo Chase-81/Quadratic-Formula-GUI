@@ -1,11 +1,11 @@
-#imports all the necessary library's
+# imports all the necessary library's
 from math import *
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 
 
-#calculates discriminant and clears inputs if ticked box is ticked
+# calculates discriminant and clears inputs if ticked box is ticked and checks validity of inputs
 def discriminant(a_value, b_value, c_value, round_num):
    try:
         a = a_value.get()
@@ -42,9 +42,6 @@ def discriminant(a_value, b_value, c_value, round_num):
                 a_value.set("")
                 b_value.set("")
                 c_value.set("")
-                discriminant_return.set("")
-                x_negative.set("")
-                x_positive.set("")
                 round_num.set("")
                 error_message.set("")
         else:
@@ -54,9 +51,9 @@ def discriminant(a_value, b_value, c_value, round_num):
 
 
 
-#calculates roots of the equation and checks the validity
+# calculates roots of the equation and checks the validity
 def roots(a_value, b_value, c_value, round_num):
-   try:
+    try:
        a = a_value.get()
        b = b_value.get()
        c = c_value.get()
@@ -114,11 +111,11 @@ def roots(a_value, b_value, c_value, round_num):
                error_message.set("")
 
            else:
-               pass
-   except:
-       pass
+            pass
+    except:
+        pass
 
-#Clears all values
+# Clears all values
 def clear_all():
     a_value.set("")
     b_value.set("")
@@ -129,8 +126,7 @@ def clear_all():
     round_num.set("")
     error_message.set("")
 
-
-#Creates window and input and output frames
+# Creates window and input and output frames
 root = Tk()
 root.title("Quadratic Formula Solver")
 
@@ -143,7 +139,7 @@ control_frame.grid(row=3, column=0, sticky="NESW")
 output_frame = ttk.LabelFrame(root, text="Output")
 output_frame.grid(row=4, column=0, sticky="NSEW")
 
-#variables of program
+# variables of program
 a_value = DoubleVar()
 a_value.set("")
 b_value = DoubleVar()
@@ -163,11 +159,11 @@ round_num = IntVar()
 round_num.set("")
 
 
-#GUI layout code
+# GUI layout code
 statement = ttk.Label(root, text="This calculator can solve quadratic equations in the form ax^2 + bx + c\nEnter the values for a, b, and c")
 statement.grid(row=0, column=0, sticky="NSEW")
 
-#Entry labels and entry fields
+# Entry labels and entry fields
 a_label = ttk.Label(input_frame, text="Enter value for a:")
 a_label.grid(row=0, column=0)
 
@@ -196,13 +192,13 @@ round_entry.grid(row=3, column=1)
 entry_button = ttk.Button(control_frame, text="Submit", command=lambda:[discriminant(a_value, b_value, c_value, round_num), roots(a_value, b_value, c_value, round_num)])
 entry_button.grid(row= 0, column=0)
 
-clear = ttk.Checkbutton(control_frame, text="Clear when submitted", variable=clear_var)
+clear = ttk.Checkbutton(control_frame, text="Clear inputs when submitted", variable=clear_var)
 clear.grid(row=0, column=1)
 
 clear_button = ttk.Button(control_frame, text="Clear all", command=clear_all)
 clear_button.grid(row=0, column=2)
 
-#Output code
+# Output code
 discriminant_label = ttk.Label(output_frame, text="Discriminant: ")
 discriminant_label.grid(row=0, column=0)
 
@@ -212,7 +208,7 @@ discriminant_value.grid(row=0, column=1)
 x_label = ttk.Label(output_frame, text="Value for x1:")
 x_label.grid(row=1, column=0)
 
-x_value_positive = ttk.Label(output_frame, textvariable=x_positive, text=",")
+x_value_positive = ttk.Label(output_frame, textvariable=x_positive)
 x_value_positive.grid(row=1, column=1)
 
 x_label2 = ttk.Label(output_frame, text="Value for x2:")
@@ -224,7 +220,7 @@ x_value_negative.grid(row=2, column=1)
 error_message_label = ttk.Label(output_frame, textvariable=error_message)
 error_message_label.grid(row=3, column=0)
 
-#loops through each item in each frame and applies spacing
+# loops through each item in each frame and applies spacing
 for widget in root.winfo_children():
     widget.grid(padx=5, pady=5)
 
@@ -236,6 +232,5 @@ for widget in control_frame.winfo_children():
 
 for widget in output_frame.winfo_children():
     widget.grid(padx=10, pady=10)
-
 
 mainloop()
