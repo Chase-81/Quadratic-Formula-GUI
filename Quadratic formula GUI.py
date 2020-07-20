@@ -49,8 +49,6 @@ def discriminant(a_value, b_value, c_value, round_num):
    except:
        messagebox.showerror("ERROR", "You have to enter one real number in entry field a, b and c.\nIf nothing is entered in the rounding field the results are not rounded.")
 
-
-
 # calculates roots of the equation and checks the validity
 def roots(a_value, b_value, c_value, round_num):
     try:
@@ -188,15 +186,20 @@ round_label.grid(row=3, column=0)
 round_entry = ttk.Entry(input_frame, textvariable=round_num)
 round_entry.grid(row=3, column=1)
 
+
 #Buttons and checkbutton
 entry_button = ttk.Button(control_frame, text="Submit", command=lambda:[discriminant(a_value, b_value, c_value, round_num), roots(a_value, b_value, c_value, round_num)])
 entry_button.grid(row= 0, column=0)
+
+root.bind('<Return>', lambda event=None: entry_button.invoke())
 
 clear = ttk.Checkbutton(control_frame, text="Clear inputs when submitted", variable=clear_var)
 clear.grid(row=0, column=1)
 
 clear_button = ttk.Button(control_frame, text="Clear all", command=clear_all)
 clear_button.grid(row=0, column=2)
+
+root.bind('<Delete>', lambda event=None: clear_button.invoke())
 
 # Output code
 discriminant_label = ttk.Label(output_frame, text="Discriminant: ")
