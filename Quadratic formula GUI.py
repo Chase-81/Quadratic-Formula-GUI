@@ -3,8 +3,10 @@ from math import *
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+import matplotlib.pyplot as plt
 
-
+y_value_list = []
+x_value_list = []
 # calculates discriminant and clears inputs if ticked box is ticked and checks validity of inputs
 def discriminant(a_value, b_value, c_value, round_num):
    try:
@@ -124,6 +126,24 @@ def clear_all():
     round_num.set("")
     error_message.set("")
 
+def graph(a_value, b_value, c_value):
+    try:
+        a = a_value.get()
+        b = b_value.get()
+        c = c_value.get()
+
+        for i in range(-100,100):
+            y_value_list.append((a*(i**2)) + (b*i) + c)
+            x_value_list.append(i)
+
+
+        plt.plot(x_value_list,y_value_list)
+        plt.grid(b=True, which='major', color='#666666', linestyle=':')
+        plt.show()
+    except:
+        pass
+
+
 # Creates window and input and output frames
 root = Tk()
 root.title("Quadratic Formula Solver")
@@ -155,6 +175,8 @@ x_negative.set("")
 error_message = StringVar()
 round_num = IntVar()
 round_num.set("")
+start_slider_var = DoubleVar()
+end_slider_var = DoubleVar()
 
 
 # GUI layout code
@@ -188,7 +210,7 @@ round_entry.grid(row=3, column=1)
 
 
 #Buttons and checkbutton
-entry_button = ttk.Button(control_frame, text="Submit", command=lambda:[discriminant(a_value, b_value, c_value, round_num), roots(a_value, b_value, c_value, round_num)])
+entry_button = ttk.Button(control_frame, text="Submit", command=lambda:[discriminant(a_value, b_value, c_value, round_num), roots(a_value, b_value, c_value, round_num), graph(a_value, b_value, c_value)])
 entry_button.grid(row= 0, column=0)
 
 root.bind('<Return>', lambda event=None: entry_button.invoke())
@@ -200,6 +222,8 @@ clear_button = ttk.Button(control_frame, text="Clear all", command=clear_all)
 clear_button.grid(row=0, column=2)
 
 root.bind('<Delete>', lambda event=None: clear_button.invoke())
+
+
 
 # Output code
 discriminant_label = ttk.Label(output_frame, text="Discriminant: ")
@@ -237,3 +261,7 @@ for widget in output_frame.winfo_children():
     widget.grid(padx=10, pady=10)
 
 mainloop()
+
+
+
+
