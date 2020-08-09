@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 y_value_list = []
 x_value_list = []
-# calculates discriminant and clears inputs if ticked box is ticked and checks validity of inputs
+# calculates discriminant and clears inputs
 def discriminant(a_value, b_value, c_value, round_num):
    try:
         a = a_value.get()
@@ -39,13 +39,6 @@ def discriminant(a_value, b_value, c_value, round_num):
 
             else:
                 messagebox.showerror("ERROR", "Tha wasn't an option")
-
-            if clear_var.get() == 1:
-                a_value.set("")
-                b_value.set("")
-                c_value.set("")
-                round_num.set("")
-                error_message.set("")
         else:
             error_message.set("I can not calculate an equation if all inputs are 0")
    except:
@@ -117,6 +110,7 @@ def roots(a_value, b_value, c_value, round_num):
 
 # Clears all values
 def clear_all():
+    global root, x_value_list, y_value_list
     a_value.set("")
     b_value.set("")
     c_value.set("")
@@ -125,21 +119,52 @@ def clear_all():
     x_negative.set("")
     round_num.set("")
     error_message.set("")
+    plt.close()
+    x_value_list = []
+    y_value_list =[]
 
 def graph(a_value, b_value, c_value):
+    global y_value_list, x_value_list
+
+
+
     try:
         a = a_value.get()
         b = b_value.get()
         c = c_value.get()
+        x_1 = x_positive.get()
+        x_2 = x_negative.get()
+        plt.close()
+        y_value_list = []
+        x_value_list = []
 
-        for i in range(-100,100):
+
+        i =-5
+
+        while i < 5:
             y_value_list.append((a*(i**2)) + (b*i) + c)
             x_value_list.append(i)
+            i+=0.1
 
 
         plt.plot(x_value_list,y_value_list)
         plt.grid(b=True, which='major', color='#666666', linestyle=':')
+        plt.axhline(y=0, color="#737373", linestyle="--")
+        plt.axvline(x=0, color="#737373", linestyle="--")
+
+        if a >= 0:
+            plt.annotate('({},{})'.format(x_1,0), xy=(x_1, 0), xytext=(3, -5),
+                arrowprops=dict(facecolor='black', shrink=1))
+            plt.annotate('({},{})'.format(x_2,0), xy=(x_2, 0), xytext=(-3, 10),
+                arrowprops=dict(facecolor='black',shrink=1))
+        elif a < 0:
+            plt.annotate('({},{})'.format(x_1,0), xy=(x_1, 0), xytext=(-3, 5),
+                arrowprops=dict(facecolor='black', shrink=1))
+            plt.annotate('({},{})'.format(x_2,0), xy=(x_2, 0), xytext=(3, -5),
+                arrowprops=dict(facecolor='black',shrink=1))
         plt.show()
+
+
     except:
         pass
 
@@ -166,8 +191,6 @@ c_value = DoubleVar()
 c_value.set("")
 discriminant_return = DoubleVar()
 discriminant_return.set("")
-clear_var = IntVar()
-clear_var.set(0)
 x_positive = DoubleVar()
 x_positive.set("")
 x_negative = DoubleVar()
@@ -209,20 +232,16 @@ round_entry = ttk.Entry(input_frame, textvariable=round_num)
 round_entry.grid(row=3, column=1)
 
 
-#Buttons and checkbutton
+#Buttons
 entry_button = ttk.Button(control_frame, text="Submit", command=lambda:[discriminant(a_value, b_value, c_value, round_num), roots(a_value, b_value, c_value, round_num), graph(a_value, b_value, c_value)])
-entry_button.grid(row= 0, column=0)
+entry_button.grid(row=0, column=0)
 
 root.bind('<Return>', lambda event=None: entry_button.invoke())
 
-clear = ttk.Checkbutton(control_frame, text="Clear inputs when submitted", variable=clear_var)
-clear.grid(row=0, column=1)
-
 clear_button = ttk.Button(control_frame, text="Clear all", command=clear_all)
-clear_button.grid(row=0, column=2)
+clear_button.grid(row=0, column=1)
 
 root.bind('<Delete>', lambda event=None: clear_button.invoke())
-
 
 
 # Output code
