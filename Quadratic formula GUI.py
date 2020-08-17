@@ -14,12 +14,14 @@ def discriminant(a_value, b_value, c_value, round_num):
         b = b_value.get()
         c = c_value.get()
 
+        zero_value = a + b + c
+
         try:
             d = round_num.get()
         except:
             d = 100
 
-        if a and b and c != 0:
+        if zero_value != 0:
 
             if d < 0:
                 messagebox.showerror("ERROR", "You can not round to {} decimal places".format(d))
@@ -123,50 +125,57 @@ def clear_all():
     x_value_list = []
     y_value_list =[]
 
-def graph(a_value, b_value, c_value):
+def graph(a_value, b_value, c_value, discriminant):
     global y_value_list, x_value_list
-
-
 
     try:
         a = a_value.get()
         b = b_value.get()
         c = c_value.get()
-        x_1 = x_positive.get()
-        x_2 = x_negative.get()
-        plt.close()
+        d = discriminant.get()
         y_value_list = []
         x_value_list = []
+        plt.close()
 
-
-        i =-5
+        i=-5
 
         while i < 5:
             y_value_list.append((a*(i**2)) + (b*i) + c)
             x_value_list.append(i)
-            i+=0.1
+            i += 0.5
 
+        if d > 0:
+            x_1 = x_positive.get()
+            x_2 = x_negative.get()
+            plt.grid(b=True, which='major', color='#666666', linestyle=':')
+            plt.axhline(y=0, color="#737373", linestyle="--")
+            plt.axvline(x=0, color="#737373", linestyle="--")
+            plt.annotate('({},{})'.format(x_1,0), xy=(x_1, 0), xytext=(3, -5))
+            plt.annotate('({},{})'.format(x_2,0), xy=(x_2, 0), xytext=(-3, 10))
+            plt.plot(x_value_list,y_value_list)
+            plt.show()
 
-        plt.plot(x_value_list,y_value_list)
-        plt.grid(b=True, which='major', color='#666666', linestyle=':')
-        plt.axhline(y=0, color="#737373", linestyle="--")
-        plt.axvline(x=0, color="#737373", linestyle="--")
+        elif d == 0:
+            print("Hello")
+            x_1 = x_positive.get()
+            plt.grid(b=True, which='major', color='#666666', linestyle=':')
+            plt.axhline(y=0, color="#737373", linestyle="--")
+            plt.axvline(x=0, color="#737373", linestyle="--")
+            plt.annotate('({},{})'.format(x_1,0), xy=(x_1, 0), xytext=(3, -5))
+            plt.plot(x_value_list,y_value_list)
+            plt.show()
 
-        if a >= 0:
-            plt.annotate('({},{})'.format(x_1,0), xy=(x_1, 0), xytext=(3, -5),
-                arrowprops=dict(facecolor='black', shrink=1))
-            plt.annotate('({},{})'.format(x_2,0), xy=(x_2, 0), xytext=(-3, 10),
-                arrowprops=dict(facecolor='black',shrink=1))
-        elif a < 0:
-            plt.annotate('({},{})'.format(x_1,0), xy=(x_1, 0), xytext=(-3, 5),
-                arrowprops=dict(facecolor='black', shrink=1))
-            plt.annotate('({},{})'.format(x_2,0), xy=(x_2, 0), xytext=(3, -5),
-                arrowprops=dict(facecolor='black',shrink=1))
-        plt.show()
+        elif d < 0:
+            plt.grid(b=True, which='major', color='#666666', linestyle=':')
+            plt.axhline(y=0, color="#737373", linestyle="--")
+            plt.axvline(x=0, color="#737373", linestyle="--")
+            plt.plot(x_value_list,y_value_list)
+            plt.show()
 
-
+        else:
+            print("Fail")
     except:
-        pass
+        print("test")
 
 
 # Creates window and input and output frames
@@ -233,7 +242,7 @@ round_entry.grid(row=3, column=1)
 
 
 #Buttons
-entry_button = ttk.Button(control_frame, text="Submit", command=lambda:[discriminant(a_value, b_value, c_value, round_num), roots(a_value, b_value, c_value, round_num), graph(a_value, b_value, c_value)])
+entry_button = ttk.Button(control_frame, text="Submit", command=lambda:[discriminant(a_value, b_value, c_value, round_num), roots(a_value, b_value, c_value, round_num), graph(a_value, b_value, c_value, discriminant_return)])
 entry_button.grid(row=0, column=0)
 
 root.bind('<Return>', lambda event=None: entry_button.invoke())
