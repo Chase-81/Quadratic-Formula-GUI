@@ -58,7 +58,6 @@ def roots(a_value, b_value, c_value, round_num):
        except:
            d = 100
 
-
        value = (b ** 2) - (4 * a * c)
 
        if value < 0:
@@ -79,6 +78,10 @@ def roots(a_value, b_value, c_value, round_num):
            elif d == 100:
                result = ((-b) + sqrt(value)) / (2 * a)
                x_positive.set(result)
+
+           elif d == 0:
+               result = ((-b) + sqrt(value)) / (2 * a)
+               x_positive.set(round(result,0))
 
 
 
@@ -125,7 +128,7 @@ def clear_all():
     x_value_list = []
     y_value_list =[]
 
-def graph(a_value, b_value, c_value, discriminant):
+def graph(a_value, b_value, c_value, discriminant, round_num):
     global y_value_list, x_value_list
 
     try:
@@ -136,6 +139,7 @@ def graph(a_value, b_value, c_value, discriminant):
         y_value_list = []
         x_value_list = []
         plt.close()
+        print("1")
 
         i=-5
 
@@ -145,6 +149,7 @@ def graph(a_value, b_value, c_value, discriminant):
             i += 0.5
 
         if d > 0:
+            print("2")
             x_1 = x_positive.get()
             x_2 = x_negative.get()
             plt.grid(b=True, which='major', color='#666666', linestyle=':')
@@ -156,7 +161,7 @@ def graph(a_value, b_value, c_value, discriminant):
             plt.show()
 
         elif d == 0:
-            print("Hello")
+            print(d)
             x_1 = x_positive.get()
             plt.grid(b=True, which='major', color='#666666', linestyle=':')
             plt.axhline(y=0, color="#737373", linestyle="--")
@@ -166,6 +171,7 @@ def graph(a_value, b_value, c_value, discriminant):
             plt.show()
 
         elif d < 0:
+            print("4")
             plt.grid(b=True, which='major', color='#666666', linestyle=':')
             plt.axhline(y=0, color="#737373", linestyle="--")
             plt.axvline(x=0, color="#737373", linestyle="--")
@@ -241,8 +247,8 @@ round_entry = ttk.Entry(input_frame, textvariable=round_num)
 round_entry.grid(row=3, column=1)
 
 
-#Buttons
-entry_button = ttk.Button(control_frame, text="Submit", command=lambda:[discriminant(a_value, b_value, c_value, round_num), roots(a_value, b_value, c_value, round_num), graph(a_value, b_value, c_value, discriminant_return)])
+# Buttons
+entry_button = ttk.Button(control_frame, text="Submit", command=lambda:[discriminant(a_value, b_value, c_value, round_num), roots(a_value, b_value, c_value, round_num), graph(a_value, b_value, c_value, discriminant_return, round_num)])
 entry_button.grid(row=0, column=0)
 
 root.bind('<Return>', lambda event=None: entry_button.invoke())
@@ -289,7 +295,3 @@ for widget in output_frame.winfo_children():
     widget.grid(padx=10, pady=10)
 
 mainloop()
-
-
-
-
