@@ -1,13 +1,15 @@
-# imports all the necessary library's
+# Imports all the necessary library's
 from math import *
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 import matplotlib.pyplot as plt
 
+# Graph value lists
 y_value_list = []
 x_value_list = []
-# calculates discriminant and clears inputs
+
+# Calculates discriminant, clears inputs, and rounds discriminant
 def discriminant(a_value, b_value, c_value, round_num):
    try:
         a = a_value.get()
@@ -46,7 +48,7 @@ def discriminant(a_value, b_value, c_value, round_num):
    except:
        messagebox.showerror("ERROR", "You have to enter one real number in entry field a, b and c.\nIf nothing is entered in the rounding field the results are not rounded.")
 
-# calculates roots of the equation and checks the validity
+# Calculates and rounds roots of the equation and checks the validity
 def roots(a_value, b_value, c_value, round_num):
     try:
        a = a_value.get()
@@ -128,7 +130,8 @@ def clear_all():
     x_value_list = []
     y_value_list =[]
 
-def graph(a_value, b_value, c_value, discriminant, round_num):
+# Graphs the equation the user entered
+def graph(a_value, b_value, c_value, discriminant):
     global y_value_list, x_value_list
 
     try:
@@ -139,7 +142,6 @@ def graph(a_value, b_value, c_value, discriminant, round_num):
         y_value_list = []
         x_value_list = []
         plt.close()
-        print("1")
 
         i=-5
 
@@ -149,33 +151,30 @@ def graph(a_value, b_value, c_value, discriminant, round_num):
             i += 0.5
 
         if d > 0:
-            print("2")
             x_1 = x_positive.get()
             x_2 = x_negative.get()
             plt.grid(b=True, which='major', color='#666666', linestyle=':')
             plt.axhline(y=0, color="#737373", linestyle="--")
             plt.axvline(x=0, color="#737373", linestyle="--")
-            plt.annotate('({},{})'.format(x_1,0), xy=(x_1, 0), xytext=(3, -5))
-            plt.annotate('({},{})'.format(x_2,0), xy=(x_2, 0), xytext=(-3, 10))
-            plt.plot(x_value_list,y_value_list)
+            plt.annotate('({},{})'.format(x_1,0), xy=(x_1, 0), xytext=(3, -5), arrowprops=dict(facecolor='black', shrink=0.05))
+            plt.annotate('({},{})'.format(x_2,0), xy=(x_2, 0), xytext=(-3, 5), arrowprops=dict(facecolor='black', shrink=0.05))
+            plt.plot(x_value_list, y_value_list)
             plt.show()
 
         elif d == 0:
-            print(d)
             x_1 = x_positive.get()
             plt.grid(b=True, which='major', color='#666666', linestyle=':')
             plt.axhline(y=0, color="#737373", linestyle="--")
             plt.axvline(x=0, color="#737373", linestyle="--")
-            plt.annotate('({},{})'.format(x_1,0), xy=(x_1, 0), xytext=(3, -5))
-            plt.plot(x_value_list,y_value_list)
+            plt.annotate('({},{})'.format(x_1, 0), xy=(x_1, 0), xytext=(3, -5), arrowprops=dict(facecolor='black', shrink=0.05))
+            plt.plot(x_value_list, y_value_list)
             plt.show()
 
         elif d < 0:
-            print("4")
             plt.grid(b=True, which='major', color='#666666', linestyle=':')
             plt.axhline(y=0, color="#737373", linestyle="--")
             plt.axvline(x=0, color="#737373", linestyle="--")
-            plt.plot(x_value_list,y_value_list)
+            plt.plot(x_value_list, y_value_list)
             plt.show()
 
         else:
@@ -197,7 +196,7 @@ control_frame.grid(row=3, column=0, sticky="NESW")
 output_frame = ttk.LabelFrame(root, text="Output")
 output_frame.grid(row=4, column=0, sticky="NSEW")
 
-# variables of program
+# Variables of program
 a_value = DoubleVar()
 a_value.set("")
 b_value = DoubleVar()
@@ -248,7 +247,7 @@ round_entry.grid(row=3, column=1)
 
 
 # Buttons
-entry_button = ttk.Button(control_frame, text="Submit", command=lambda:[discriminant(a_value, b_value, c_value, round_num), roots(a_value, b_value, c_value, round_num), graph(a_value, b_value, c_value, discriminant_return, round_num)])
+entry_button = ttk.Button(control_frame, text="Submit", command=lambda:[discriminant(a_value, b_value, c_value, round_num), roots(a_value, b_value, c_value, round_num), graph(a_value, b_value, c_value, discriminant_return)])
 entry_button.grid(row=0, column=0)
 
 root.bind('<Return>', lambda event=None: entry_button.invoke())
@@ -281,7 +280,7 @@ x_value_negative.grid(row=2, column=1)
 error_message_label = ttk.Label(output_frame, textvariable=error_message)
 error_message_label.grid(row=3, column=0)
 
-# loops through each item in each frame and applies spacing
+# Loops through each item in each frame and applies spacing
 for widget in root.winfo_children():
     widget.grid(padx=5, pady=5)
 
